@@ -50,7 +50,8 @@ class Validator
     {
         if (isset(static::FORMATS[$countryCode])) {
             $regex = '/^' . static::FORMATS[$countryCode] . '$/';
-        } else {
+        }
+        else {
             $regex = '/' . static::FORMATS['DEFAULT'] . '/';
         }
 
@@ -71,7 +72,9 @@ class Validator
     {
         static $instance;
 
-        if (!$instance) $instance = new static;
+        if (!$instance) {
+            $instance = new static;
+        }
 
         return $instance->validate($zipCode, $countryCode);
     }

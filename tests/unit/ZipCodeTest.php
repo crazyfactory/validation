@@ -2,9 +2,6 @@
 
 namespace CrazyFactory\Validation\Tests;
 
-use CrazyFactory\Validation\ZipCode\Validator as ZipCodeValidator;
-use CrazyFactory\Validation\ZipCode\Sanitizer as ZipCodeSanitizer;
-
 class ZipCodeTest extends \Codeception\Test\Unit
 {
     public function testIsValid()

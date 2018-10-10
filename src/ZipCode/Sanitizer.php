@@ -27,9 +27,11 @@ class Sanitizer
 
         if ($countryCode === 'NL') {
             $splitPos = 4;
-        } elseif ($countryCode === 'GB') {
+        }
+        elseif ($countryCode === 'GB') {
             $splitPos = min(max(strlen($newCode) - 3, 2), 4);
-        } elseif (in_array($countryCode, ['CZ', 'MT', 'SE', 'SK'])) {
+        }
+        elseif (in_array($countryCode, ['CZ', 'MT', 'SE', 'SK'])) {
             $splitPos = 3;
         }
 
@@ -59,7 +61,9 @@ class Sanitizer
     {
         static $instance;
 
-        if (!$instance) $instance = new static;
+        if (!$instance) {
+            $instance = new static;
+        }
 
         return $instance->format($zipCode, $countryCode);
     }
