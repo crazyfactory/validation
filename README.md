@@ -4,8 +4,15 @@ This repo contains Helper classes used for various Validation tasks
 
 ## Example usage
 
-```
-    $isValidZipCode = ZipCodeValidator::isValid($CountryCode, $ZipCode);
+```php
+use CrazyFactory\Validation\ZipCode\Validator as ZipCodeValidator;
+use CrazyFactory\Validation\ZipCode\Sanitizer as ZipCodeSanitizer;
+
+$isValidZipCode = ZipCodeValidator::isValid($zipCode, $countryCode);
+// => bool
+
+$zipCode = ZipCodeSanitizer::sanitize($zipCode, $countryCode);
+// => a sanitized and valid zip code (original code on failure)
 ```
 
 ## Requirements
