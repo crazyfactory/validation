@@ -28,7 +28,9 @@ class ZipCodeTest extends \Codeception\Test\Unit
         $this->assertSame('12345', Sanitizer::sanitize('1 23 45', 'FR'), 'FR');
         $this->assertSame('1234 XY', Sanitizer::sanitize('1234XY', 'NL'), 'NL');
         $this->assertSame('123 45', Sanitizer::sanitize('12345', 'CZ'), 'CZ');
-        $this->assertSame('123 45', Sanitizer::sanitize('1 234 5', 'CZ'), 'CZ');
-        $this->assertSame('CantFix', Sanitizer::sanitize('CantFix', 'FI'), 'cant fix');
+        $this->assertSame('123 45', Sanitizer::sanitize('1 234 5', 'CZ', $sanitized), 'CZ');
+        $this->assertTrue($sanitized);
+        $this->assertSame('CantFix', Sanitizer::sanitize('CantFix', 'FI', $sanitized), 'cant fix');
+        $this->assertFalse($sanitized);
     }
 }
