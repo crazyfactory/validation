@@ -22,6 +22,7 @@ before_install:
 
 install:
   - composer install --prefer-dist
+  - scripts/ci-install.sh
 
 deploy:
   provider: script
