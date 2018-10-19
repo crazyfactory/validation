@@ -33,4 +33,13 @@ class ZipCodeTest extends \Codeception\Test\Unit
         $this->assertSame('CantFix', Sanitizer::sanitize('CantFix', 'FI', $sanitized), 'cant fix');
         $this->assertFalse($sanitized);
     }
+
+    public function testExamples()
+    {
+        foreach (Validator::EXAMPLES as $country => $codes) {
+            foreach ($codes as $code) {
+                $this->assertTrue(Validator::isValid($code, $country), "{$code} is in valid for {$country}");
+            }
+        }
+    }
 }
