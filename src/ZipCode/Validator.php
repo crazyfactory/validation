@@ -2,6 +2,14 @@
 
 namespace CrazyFactory\Validation\ZipCode;
 
+/**
+ * Ireland has special rules.
+ * We need to enter zip code as `-` and precede city with zip code.
+ * We handle this in ERP.
+ *
+ * Class Validator
+ * @package CrazyFactory\Validation\ZipCode
+ */
 class Validator
 {
     const EXAMPLES = [
@@ -20,7 +28,7 @@ class Validator
         'GB' => ['AA11 1AA','A1A 1AA','AA1 1AA','AA1A 1AA','A11 1AA','A1 1AA'],
         'GR' => ['11111'],
         'HU' => ['1111'],
-        // 'IE' too many variants
+        // 'IE' See above
         'IT' => ['11111'],
         'LT' => ['11111'],
         'LU' => ['1111'],
@@ -54,7 +62,7 @@ class Validator
         'GB' => '[A-Z\\d]{2,4}\\s\\d[A-Z]{2}',
         'GR' => '[1-9]{1}[0-9]{4}',
         'HU' => '\\d{4}',
-        'IE' => '[-1-9]{1}',
+        // 'IE' => '[-1-9]{1}', See above
         'IT' => '\\d{5}',
         'LT' => '\\d{5}',
         'LU' => '[1-9]\\d{3}',
@@ -81,6 +89,9 @@ class Validator
      */
     public function validate(string $zipCode, string $countryCode): bool
     {
+        // See above
+        if ($countryCode === 'IE') return true;
+
         if (isset(static::FORMATS[$countryCode])) {
             $regex = '/^' . static::FORMATS[$countryCode] . '$/';
         }
@@ -103,6 +114,9 @@ class Validator
      */
     public static function isValid(string $zipCode, string $countryCode): bool
     {
+        // See above
+        if ($countryCode === 'IE') return true;
+
         static $instance;
 
         if (!$instance) {
