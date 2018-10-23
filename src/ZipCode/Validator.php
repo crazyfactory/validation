@@ -90,7 +90,9 @@ class Validator
     public function validate(string $zipCode, string $countryCode): bool
     {
         // See above
-        if ($countryCode === 'IE') return true;
+        if ($countryCode === 'IE') {
+            return true;
+        }
 
         if (isset(static::FORMATS[$countryCode])) {
             $regex = '/^' . static::FORMATS[$countryCode] . '$/';
@@ -115,7 +117,9 @@ class Validator
     public static function isValid(string $zipCode, string $countryCode): bool
     {
         // See above
-        if ($countryCode === 'IE') return true;
+        if ($countryCode === 'IE') {
+            return true;
+        }
 
         static $instance;
 
