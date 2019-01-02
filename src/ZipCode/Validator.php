@@ -94,6 +94,17 @@ class Validator
             return true;
         }
 
+        // No need zip code countries
+        if (in_array($countryCode, [
+            'AE',
+            'AU',
+            'BA',
+            'CO',
+            'QA',
+        ])) {
+            return true;
+        }
+
         if (isset(static::FORMATS[$countryCode])) {
             $regex = '/^' . static::FORMATS[$countryCode] . '$/';
         }
