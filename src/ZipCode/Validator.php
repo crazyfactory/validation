@@ -43,6 +43,7 @@ class Validator
         'SE' => ['111 11'],
         'SI' => ['1111'],
         'SK' => ['111 11'],
+        'N/A' => ['00000'],
     ];
 
     const FORMATS = [
