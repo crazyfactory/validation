@@ -43,6 +43,11 @@ class Validator
         'SE' => ['111 11'],
         'SI' => ['1111'],
         'SK' => ['111 11'],
+        'AE' => ['00000', 'N/A'],
+        'AU' => ['00000', 'N/A'],
+        'BA' => ['00000', 'N/A'],
+        'CO' => ['00000', 'N/A'],
+        'QA' => ['00000', 'N/A'],
     ];
 
     const FORMATS = [
@@ -91,6 +96,17 @@ class Validator
     {
         // See above
         if ($countryCode === 'IE') {
+            return true;
+        }
+
+        // No need zip code countries
+        if (in_array($countryCode, [
+            'AE',
+            'AU',
+            'BA',
+            'CO',
+            'QA',
+        ])) {
             return true;
         }
 
