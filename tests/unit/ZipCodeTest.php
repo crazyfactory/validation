@@ -20,6 +20,7 @@ class ZipCodeTest extends \Codeception\Test\Unit
         $noPostCodeCountries = ['AE', 'AU', 'BA', 'CO', 'QA'];
         foreach ($noPostCodeCountries as $country) {
             $this->assertTrue(Validator::isValid('', $country));
+            $this->assertTrue(Validator::isValid('00000', $country));
         }
     }
 
