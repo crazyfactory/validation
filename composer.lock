@@ -4,8 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "22612e8216d4788c320a8c4ff260c6a3",
-    "packages": [],
+    "content-hash": "5adfd84701810f367264f63e0a8e4dcb",
+    "packages": [
+        {
+            "name": "crazyfactory/harmonized-system",
+            "version": "2.3.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.fury.io/UCpRw63Jt1PLKtRF7nyP/crazyfactory/~/d/crazyfactory%2Fharmonized-system/crazyfactory%2Fharmonized-system-2.3.0",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1.0"
+            },
+            "require-dev": {
+                "crazyfactory/sniffs": "^1.3",
+                "phpunit/phpunit": "^7.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "CrazyFactory\\HarmonizedSystem\\": "src/"
+                }
+            }
+        }
+    ],
     "packages-dev": [
         {
             "name": "behat/gherkin",
