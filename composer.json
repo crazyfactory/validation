@@ -13,7 +13,8 @@
         }
     },
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "crazyfactory/harmonized-system": "^2.3"
     },
     "require-dev": {
         "codeception/codeception": "^2.4",
