@@ -2,7 +2,6 @@
 
 namespace CrazyFactory\Validation\Tests\unit;
 
-
 use CrazyFactory\Validation\Eori\EoriValidator;
 
 class EoriValidatorTest extends \Codeception\Test\Unit

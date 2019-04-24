@@ -2,7 +2,6 @@
 
 namespace CrazyFactory\Validation\Eori;
 
-
 use CrazyFactory\HarmonizedSystem\Countries;
 
 class EoriValidator
