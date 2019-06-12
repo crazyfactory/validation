@@ -14,7 +14,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             ['eori' => 'DE', 'expected' => false],
             ['eori' => 'TH1234', 'expected' => false],
             ['eori' => 'DE11111111111111111111', 'expected' => false],
-            ['eori' => 'DEEE1111', 'expected' => false]
+            ['eori' => 'DEEE1111', 'expected' => true]
         ];
     }
 
