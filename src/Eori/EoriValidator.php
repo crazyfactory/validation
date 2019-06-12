@@ -17,11 +17,6 @@ class EoriValidator
             return false;
         }
 
-        $number = substr($eori, 2);
-        if (!is_numeric($number)) {
-            return false;
-        }
-
         return true;
     }
 }
