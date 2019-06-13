@@ -10,10 +10,11 @@ class EoriValidatorTest extends \Codeception\Test\Unit
     public function testValidate()
     {
         $response = new \stdClass();
-        $response->result = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
 
         // Success
-        $response->result->status = 0;
+        $response->return->result->status = 0;
         $soapClient = Stub::makeEmpty(\SoapClient::class, [
             '__soapCall' => $response
         ]);
@@ -23,7 +24,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
 
 
         // Failed
-        $response->result->status = 1;
+        $response->return->result->status = 1;
         $soapClient = Stub::makeEmpty(\SoapClient::class, [
             '__soapCall' => $response
         ]);
@@ -35,9 +36,10 @@ class EoriValidatorTest extends \Codeception\Test\Unit
     public function testValidateWhenWsdlCannotBeLoaded()
     {
         $response = new \stdClass();
-        $response->result = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
         // Failed
-        $response->result->status = 1;
+        $response->return->result->status = 1;
         $soapClient = Stub::makeEmpty(\SoapClient::class, [
             '__soapCall' => function () {
                 throw new \SoapFault('WSDL', 'wsdl error');
@@ -51,9 +53,10 @@ class EoriValidatorTest extends \Codeception\Test\Unit
     public function testValidateWithServerError()
     {
         $response = new \stdClass();
-        $response->result = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
         // Failed
-        $response->result->status = 1;
+        $response->return->result->status = 1;
         $soapClient = Stub::makeEmpty(\SoapClient::class, [
             '__soapCall' => function () {
                 throw new \SoapFault('soap:Server', 'remote server error');
@@ -67,9 +70,10 @@ class EoriValidatorTest extends \Codeception\Test\Unit
     public function testValidateWhenFaultCodeNotMatchAnySetting()
     {
         $response = new \stdClass();
-        $response->result = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
         // Failed
-        $response->result->status = 1;
+        $response->return->result->status = 1;
         $soapClient = Stub::makeEmpty(\SoapClient::class, [
             '__soapCall' => function () {
                 throw new \SoapFault('Client', 'remote server error');

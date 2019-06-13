@@ -69,7 +69,7 @@ class EoriValidator
             // 0 = success
             // 1 = failed
 
-            return $response->result->status === 0;
+            return $response->return->result->status === 0;
         }
         catch (\SoapFault $e) {
             if (in_array($e->faultcode, $this->negativeFaultCodes)) {
