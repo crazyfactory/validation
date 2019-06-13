@@ -32,7 +32,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
         $this->assertFalse($result);
     }
 
-    public function testValidateWithWSDLFaultCode()
+    public function testValidateWhenWsdlCannotBeLoaded()
     {
         $response = new \stdClass();
         $response->result = new \stdClass();
@@ -45,27 +45,10 @@ class EoriValidatorTest extends \Codeception\Test\Unit
         ]);
         $validator = new EoriValidator($soapClient);
         $result = $validator->validate('x');
-        $this->assertFalse($result);
-    }
-
-    public function testValidateWithByPassRemoteError()
-    {
-        $response = new \stdClass();
-        $response->result = new \stdClass();
-        // Failed
-        $response->result->status = 1;
-        $soapClient = Stub::makeEmpty(\SoapClient::class, [
-            '__soapCall' => function () {
-                throw new \SoapFault('soap:Server', 'remote server error');
-            }
-        ]);
-        $validator = new EoriValidator($soapClient);
-        $validator->setByPassRemoteError(true);
-        $result = $validator->validate('x');
         $this->assertTrue($result);
     }
 
-    public function testValidateWithBNotByPassRemoteError()
+    public function testValidateWithServerError()
     {
         $response = new \stdClass();
         $response->result = new \stdClass();
@@ -77,7 +60,22 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             }
         ]);
         $validator = new EoriValidator($soapClient);
-        $validator->setByPassRemoteError(false);
+        $result = $validator->validate('x');
+        $this->assertFalse($result);
+    }
+
+    public function testValidateWhenFaultCodeNotMatchAnySetting()
+    {
+        $response = new \stdClass();
+        $response->result = new \stdClass();
+        // Failed
+        $response->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => function () {
+                throw new \SoapFault('Client', 'remote server error');
+            }
+        ]);
+        $validator = new EoriValidator($soapClient);
         $this->expectException(\SoapFault::class);
         $validator->validate('x');
     }

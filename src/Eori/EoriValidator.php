@@ -7,16 +7,30 @@ use SoapClient;
 class EoriValidator
 {
     private $soapClient;
-    private $byPassRemoteError = true;
+    // Interpret the result as valid if match these fault codes
+    private $ignoreFaultCodes = [];
+    // Interpret the result as invalid if match these fault codes
+    private $negativeFaultCodes = [];
+
+    // Exception will be thrown if fault code match none of the above settings
 
     public function __construct(SoapClient $client = null)
     {
         $this->soapClient = $client ?? new SoapClient('https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation?wsdl');
+        $this->negativeFaultCodes = ['soap:Server'];
+        $this->ignoreFaultCodes = ['WSDL'];
     }
 
-    public function setByPassRemoteError(bool $byPassRemoteError): EoriValidator
+    public function setNegativeFaultCodes(array $negativeFaultCodes): EoriValidator
     {
-        $this->byPassRemoteError = $byPassRemoteError;
+        $this->negativeFaultCodes = $negativeFaultCodes;
+
+        return $this;
+    }
+
+    public function setIgnoreFaultCodes(array $faultCodes): EoriValidator
+    {
+        $this->ignoreFaultCodes = $faultCodes;
 
         return $this;
     }
@@ -36,11 +50,11 @@ class EoriValidator
 
             return $response->result->status === 0;
         } catch (\SoapFault $e) {
-            if ($e->faultcode === 'WSDL') {
+            if (in_array($e->faultcode, $this->negativeFaultCodes)) {
                 return false;
             }
 
-            if ($this->byPassRemoteError) {
+            if (in_array($e->faultcode, $this->ignoreFaultCodes)) {
                 return true;
             }
 
