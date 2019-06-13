@@ -6,10 +6,21 @@ use SoapClient;
 
 class EoriValidator
 {
+    /**
+     * @var SoapClient
+     */
     private $soapClient;
-    // Interpret the result as valid if match these fault codes
+
+    /**
+     * Interpret the result as valid if match these fault codes
+     * @var array
+     */
     private $ignoreFaultCodes = [];
-    // Interpret the result as invalid if match these fault codes
+
+    /**
+     * Interpret the result as invalid if match these fault codes
+     * @var array
+     */
     private $negativeFaultCodes = [];
 
     public function __construct(SoapClient $client = null)
@@ -19,6 +30,10 @@ class EoriValidator
         $this->ignoreFaultCodes = ['WSDL'];
     }
 
+    /**
+     * @param array $negativeFaultCodes
+     * @return EoriValidator
+     */
     public function setNegativeFaultCodes(array $negativeFaultCodes): EoriValidator
     {
         $this->negativeFaultCodes = $negativeFaultCodes;
@@ -26,6 +41,10 @@ class EoriValidator
         return $this;
     }
 
+    /**
+     * @param array $faultCodes
+     * @return EoriValidator
+     */
     public function setIgnoreFaultCodes(array $faultCodes): EoriValidator
     {
         $this->ignoreFaultCodes = $faultCodes;
@@ -37,7 +56,7 @@ class EoriValidator
      * Validate EORI against SOAP API.
      * You can define $negativeFaultCodes and $ignoreFaultCodes to control the output that make sense for your application.
      * If the fault code does not match any of those two settings, then exception will be thrown.
-     * 
+     *
      * @param string $eori
      * @return bool
      * @throws \SoapFault
