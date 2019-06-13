@@ -2,31 +2,38 @@
 
 namespace CrazyFactory\Validation\Tests\unit;
 
+use Codeception\Util\Stub;
 use CrazyFactory\Validation\Eori\EoriValidator;
 
 class EoriValidatorTest extends \Codeception\Test\Unit
 {
-    public function dataTestValidate()
-    {
-        return [
-            ['eori' => 'DE12354', 'expected' => true],
-            ['eori' => 'DE1', 'expected' => true],
-            ['eori' => 'DE', 'expected' => false],
-            ['eori' => 'TH1234', 'expected' => false],
-            ['eori' => 'DE11111111111111111111', 'expected' => false],
-            ['eori' => 'DEEE1111', 'expected' => true]
-        ];
-    }
-
     /**
-     * @dataProvider dataTestValidate
      * @param $eori
      * @param $expected
      * @throws \Exception
      */
-    public function testValidate($eori, $expected)
+    public function testValidate()
     {
-        $result = (new EoriValidator)->validate($eori);
-        $this->assertSame($result, $expected);
+        $response = new \stdClass();
+        $response->result = new \stdClass();
+
+        // Success
+        $response->result->status = 0;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => $response
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('1234');
+        $this->assertTrue($result);
+
+
+        // Failed
+        $response->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => $response
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('1234');
+        $this->assertFalse($result);
     }
 }

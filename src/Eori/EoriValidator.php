@@ -2,21 +2,28 @@
 
 namespace CrazyFactory\Validation\Eori;
 
-use CrazyFactory\HarmonizedSystem\Countries;
+use SoapClient;
 
 class EoriValidator
 {
+    private $soapClient;
+
+    public function __construct(SoapClient $client = null)
+    {
+        $this->soapClient = $client ?? new SoapClient('https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation?wsdl');
+    }
+
     /**
      * @param string $eori
      * @return bool
      */
     public function validate(string $eori): bool
     {
-        $countryCode = substr($eori, 0, 2);
-        if (!Countries::isEU($countryCode) || strlen($eori) > 17 || strlen($eori) <= 2) {
-            return false;
-        }
+        $response = $this->soapClient->__soapCall('validateEORI', ['validateEORI' => ['eori' => $eori]]);
 
-        return true;
+        // 0 = success
+        // 1 = failed
+
+        return $response->result->status === 0;
     }
 }
