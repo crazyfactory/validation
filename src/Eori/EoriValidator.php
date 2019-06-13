@@ -12,8 +12,6 @@ class EoriValidator
     // Interpret the result as invalid if match these fault codes
     private $negativeFaultCodes = [];
 
-    // Exception will be thrown if fault code match none of the above settings
-
     public function __construct(SoapClient $client = null)
     {
         $this->soapClient = $client ?? new SoapClient('https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation?wsdl');
@@ -36,6 +34,10 @@ class EoriValidator
     }
 
     /**
+     * Validate EORI against SOAP API.
+     * You can define $negativeFaultCodes and $ignoreFaultCodes to control the output that make sense for your application.
+     * If the fault code does not match any of those two settings, then exception will be thrown.
+     * 
      * @param string $eori
      * @return bool
      * @throws \SoapFault
