@@ -80,8 +80,8 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             }
         ]);
         $validator = new EoriValidator($soapClient);
-        $this->expectException(\SoapFault::class);
-        $validator->validate('IE7761569R');
+        $result = $validator->validate('IE7761569R');
+        $this->assertFalse($result);
     }
 
     public function testValidateWhenLocalRegexNotMatch()
