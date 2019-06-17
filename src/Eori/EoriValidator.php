@@ -25,7 +25,7 @@ class EoriValidator
 
     public function __construct(SoapClient $client = null)
     {
-        $this->soapClient = $client ?? new SoapClient('https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation?wsdl');
+        $this->soapClient = $client;
         $this->negativeFaultCodes = ['soap:Server'];
         $this->ignoreFaultCodes = ['WSDL'];
     }
@@ -64,14 +64,21 @@ class EoriValidator
     public function validate(string $eori): bool
     {
         try {
+            if (preg_match('/[A-Z]{2}[^\s\n\r\t]*/', $eori) !== 1) {
+                return false;
+            }
+
+            if (empty($this->soapClient)) {
+                $this->soapClient = new SoapClient('https://ec.europa.eu/taxation_customs/dds2/eos/validation/services/validation?wsdl');
+            }
+
             $response = $this->soapClient->__soapCall('validateEORI', ['validateEORI' => ['eori' => $eori]]);
 
             // 0 = success
             // 1 = failed
 
             return $response->return->result->status === 0;
-        }
-        catch (\SoapFault $e) {
+        } catch (\SoapFault $e) {
             if (in_array($e->faultcode, $this->negativeFaultCodes)) {
                 return false;
             }

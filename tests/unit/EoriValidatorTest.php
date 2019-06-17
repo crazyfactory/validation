@@ -19,7 +19,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             '__soapCall' => $response
         ]);
         $validator = new EoriValidator($soapClient);
-        $result = $validator->validate('1234');
+        $result = $validator->validate('IE7761569R');
         $this->assertTrue($result);
 
 
@@ -29,7 +29,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             '__soapCall' => $response
         ]);
         $validator = new EoriValidator($soapClient);
-        $result = $validator->validate('1234');
+        $result = $validator->validate('IE7761569R');
         $this->assertFalse($result);
     }
 
@@ -46,7 +46,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             }
         ]);
         $validator = new EoriValidator($soapClient);
-        $result = $validator->validate('x');
+        $result = $validator->validate('IE7761569R');
         $this->assertTrue($result);
     }
 
@@ -63,7 +63,7 @@ class EoriValidatorTest extends \Codeception\Test\Unit
             }
         ]);
         $validator = new EoriValidator($soapClient);
-        $result = $validator->validate('x');
+        $result = $validator->validate('IE7761569R');
         $this->assertFalse($result);
     }
 
@@ -81,6 +81,13 @@ class EoriValidatorTest extends \Codeception\Test\Unit
         ]);
         $validator = new EoriValidator($soapClient);
         $this->expectException(\SoapFault::class);
-        $validator->validate('x');
+        $validator->validate('IE7761569R');
+    }
+
+    public function testValidateWhenLocalRegexNotMatch()
+    {
+        $validator = new EoriValidator();
+        $result = $validator->validate('x');
+        $this->assertFalse($result);
     }
 }
