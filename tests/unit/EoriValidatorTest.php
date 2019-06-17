@@ -2,31 +2,92 @@
 
 namespace CrazyFactory\Validation\Tests\unit;
 
+use Codeception\Util\Stub;
 use CrazyFactory\Validation\Eori\EoriValidator;
 
 class EoriValidatorTest extends \Codeception\Test\Unit
 {
-    public function dataTestValidate()
+    public function testValidate()
     {
-        return [
-            ['eori' => 'DE12354', 'expected' => true],
-            ['eori' => 'DE1', 'expected' => true],
-            ['eori' => 'DE', 'expected' => false],
-            ['eori' => 'TH1234', 'expected' => false],
-            ['eori' => 'DE11111111111111111111', 'expected' => false],
-            ['eori' => 'DEEE1111', 'expected' => true]
-        ];
+        $response = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
+
+        // Success
+        $response->return->result->status = 0;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => $response
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('IE7761569R');
+        $this->assertTrue($result);
+
+
+        // Failed
+        $response->return->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => $response
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('IE7761569R');
+        $this->assertFalse($result);
     }
 
-    /**
-     * @dataProvider dataTestValidate
-     * @param $eori
-     * @param $expected
-     * @throws \Exception
-     */
-    public function testValidate($eori, $expected)
+    public function testValidateWhenWsdlCannotBeLoaded()
     {
-        $result = (new EoriValidator)->validate($eori);
-        $this->assertSame($result, $expected);
+        $response = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
+        // Failed
+        $response->return->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => function () {
+                throw new \SoapFault('WSDL', 'wsdl error');
+            }
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('IE7761569R');
+        $this->assertTrue($result);
+    }
+
+    public function testValidateWithServerError()
+    {
+        $response = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
+        // Failed
+        $response->return->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => function () {
+                throw new \SoapFault('soap:Server', 'remote server error');
+            }
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('IE7761569R');
+        $this->assertFalse($result);
+    }
+
+    public function testValidateWhenFaultCodeNotMatchAnySetting()
+    {
+        $response = new \stdClass();
+        $response->return = new \stdClass();
+        $response->return->result = new \stdClass();
+        // Failed
+        $response->return->result->status = 1;
+        $soapClient = Stub::makeEmpty(\SoapClient::class, [
+            '__soapCall' => function () {
+                throw new \SoapFault('Client', 'remote server error');
+            }
+        ]);
+        $validator = new EoriValidator($soapClient);
+        $result = $validator->validate('IE7761569R');
+        $this->assertFalse($result);
+    }
+
+    public function testValidateWhenLocalRegexNotMatch()
+    {
+        $validator = new EoriValidator();
+        $result = $validator->validate('x');
+        $this->assertFalse($result);
     }
 }
