@@ -18,6 +18,7 @@ class ZipCodeTest extends \Codeception\Test\Unit
         $this->assertTrue(Validator::isValid('01234', 'FR'), 'FR');
         $this->assertTrue(Validator::isValid('M6 6SD', 'GB'), 'GB: M6 6SD');
         $this->assertTrue(Validator::isValid('11111', 'HR'), 'HR: 11111');
+        $this->assertTrue(Validator::isValid('0363', 'LU'), 'LU');
 
         $noPostCodeCountries = ['AE', 'AU', 'BA', 'CO', 'QA'];
         foreach ($noPostCodeCountries as $country) {
