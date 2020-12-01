@@ -12,6 +12,8 @@ class LatinCharValidatorTest extends \Codeception\Test\Unit
         // Allow characters
         // English with some common special characters
         $this->assertTrue(LatinCharValidator::isValid('ABCD/xx6521#$%!@*^^_= ()``..'));
+        // Single white space
+        $this->assertTrue(LatinCharValidator::isValid(' '));
         // German
         $this->assertTrue(LatinCharValidator::isValid('Öffentlichkeit präsentierten/_= ()``..'));
         // Spain
