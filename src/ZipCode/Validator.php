@@ -59,7 +59,7 @@ class Validator
         'CY' => '[1-9]\\d{3}',
         'CZ' => '\\d{3}\\s\\d{2}',
         'DE' => '[0-9]{5}',
-        'DEFAULT' => '[0-9A-Z]',
+        'DEFAULT' => '[0-9A-Z]{1,10}',
         'DK' => '\\d{4}',
         'EE' => '[1-9]{1}[0-9]{4}',
         'ES' => '(AD{0,1}\\d{3})|\\d{5}',
@@ -73,7 +73,7 @@ class Validator
         'IT' => '\\d{5}',
         'LT' => '\\d{5}',
         'LU' => '[0-9]\\d{3}',
-        'LV' => '[1-9]{1}\\d{3}',
+        'LV' => '(LV-)?[1-9]{1}\\d{3}',
         'MC' => '98[0-9]{3}',
         'MT' => '[A-Z]{3}\\s[1-9]{1}[0-9]{3}',
         'NL' => '[1-9]\\d{3}\\s[A-Z]{2}',
@@ -111,13 +111,7 @@ class Validator
         ])) {
             return true;
         }
-
-        if (isset(static::FORMATS[$countryCode])) {
-            $regex = '/^' . static::FORMATS[$countryCode] . '$/';
-        }
-        else {
-            $regex = '/' . static::FORMATS['DEFAULT'] . '/';
-        }
+        $regex = '/^' . (static::FORMATS[$countryCode] ?? static::FORMATS['DEFAULT']) . '$/i';
 
         return preg_match($regex, $zipCode) > 0;
     }
