@@ -55,6 +55,36 @@ class LatinCharValidatorTest extends \Codeception\Test\Unit
         // Russian chars
         $this->assertFalse(LatinCharValidator::isValid('Меня зовут Мандли'));
         // Basic Latin C0 controls
-        $this->assertFalse(LatinCharValidator::isValid('Hello World '));
+        $c0 = [
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '	',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            '',
+            ''
+        ];
+        foreach ($c0 as $item) {
+            $this->assertFalse(LatinCharValidator::isValid('Hello World ' . $item));
+        }
     }
 }
