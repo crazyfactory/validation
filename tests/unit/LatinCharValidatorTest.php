@@ -62,8 +62,6 @@ class LatinCharValidatorTest extends \Codeception\Test\Unit
             '',
             '',
             '',
-            '	',
-            '',
             '',
             '',
             '',
@@ -87,7 +85,16 @@ class LatinCharValidatorTest extends \Codeception\Test\Unit
             $this->assertFalse(LatinCharValidator::isValid('Hello World ' . $item));
         }
 
-        $string = "test3 theguy\nfubar 5\nGelbe Tür!2\n154 5thfdd            test\t\ttab";
+        $c0 = [
+            '	',  // tab
+            '',  // newline
+        ];
+
+        foreach ($c0 as $item) {
+            $this->assertTrue(LatinCharValidator::isValid('Hello World ' . $item));
+        }
+
+        $string = "test3 theguy\nfubar 5\nGelbe Tür!2\n154  5thfdd            test\t\ttab";
         $this->assertTrue(LatinCharValidator::isValid($string));
     }
 }
