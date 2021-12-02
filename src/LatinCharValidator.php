@@ -13,6 +13,9 @@ class LatinCharValidator
      */
     public static function isValid(string $txt): bool
     {
+        // remove whitespaces tabs and new-lines
+        $txt = preg_replace('/\s+/S', " ", $txt);
+
         return empty($txt) || (preg_match('/^[\p{Latin}\p{Common}]+$/u', $txt) > 0
                 && preg_match('/[\x{0000}-\x{001F}]/u', $txt) == 0);
     }

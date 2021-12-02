@@ -86,5 +86,8 @@ class LatinCharValidatorTest extends \Codeception\Test\Unit
         foreach ($c0 as $item) {
             $this->assertFalse(LatinCharValidator::isValid('Hello World ' . $item));
         }
+
+        $string = "test3 theguy\nfubar 5\nGelbe Tür!2\n154 5thfdd            test\t\ttab";
+        $this->assertTrue(LatinCharValidator::isValid($string));
     }
 }
