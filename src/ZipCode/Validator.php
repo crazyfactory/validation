@@ -29,7 +29,7 @@ class Validator
         'GR' => ['11111'],
         'HR' => ['11111'],
         'HU' => ['1111'],
-        // 'IE' See above
+        'IE' => ['A11 A111','A11 AA11', 'A11 AAA1','A11 AAAA','A11 A11A','A11 A1A1','D6W A111','D6W AA11','D6W AAA1','D6W AAAA','D6W A11A','D6W A1A1'],
         'IT' => ['11111'],
         'LT' => ['11111'],
         'LU' => ['1111'],
@@ -69,13 +69,13 @@ class Validator
         'GR' => '[1-9]{1}[0-9]{4}',
         'HR' => '[0-9]{5}',
         'HU' => '\\d{4}',
-        // 'IE' => '[-1-9]{1}', See above
+        'IE' => '(D6W|[A-HK-PR-TW-Y]{1}[0-9]{2})\\s[A-Z]{1}[A-Z0-9]{3}',
         'IT' => '\\d{5}',
         'LT' => '\\d{5}',
         'LU' => '[0-9]\\d{3}',
         'LV' => '(LV-)?[1-9]{1}\\d{3}',
         'MC' => '98[0-9]{3}',
-        'MT' => '[A-Z]{3}\\s[1-9]{1}[0-9]{3}',
+        'MT' => '[A-Z]{3}\\s[0-9]{4}',
         'NL' => '[1-9]\\d{3}\\s[A-Z]{2}',
         'NO' => '\\d{4}',
         'PL' => '\\d{2}-\\d{3}',
@@ -96,11 +96,6 @@ class Validator
      */
     public function validate(string $zipCode, string $countryCode): bool
     {
-        // See above
-        if ($countryCode === 'IE') {
-            return true;
-        }
-
         // No need zip code countries
         if (in_array($countryCode, [
             'AE',
@@ -128,11 +123,6 @@ class Validator
      */
     public static function isValid(string $zipCode, string $countryCode): bool
     {
-        // See above
-        if ($countryCode === 'IE') {
-            return true;
-        }
-
         static $instance;
 
         if (!$instance) {
