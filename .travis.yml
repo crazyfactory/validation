@@ -27,7 +27,6 @@ install:
 deploy:
   provider: script
   script: scripts/deploy.sh
-  skip_cleanup: false
   on:
     tags: true
     condition: "$TRAVIS_PHP_VERSION = 8.2"
