@@ -6,10 +6,11 @@ cache:
     - $HOME/.composer/cache
 
 matrix:
+
   include:
-    - dist: focal
-      php: 8.2
-      env: LIBONIG_INSTALL=1
+  - php: 7.1
+  - php: 7.2
+  - php: nightly
 
   fast_finish: true
 
@@ -17,7 +18,6 @@ matrix:
   - php: nightly
 
 before_install:
-  - if [ -n "$LIBONIG_INSTALL" ]; then sudo apt-get install libonig5; fi
   - composer self-update
 
 install:
@@ -29,7 +29,7 @@ deploy:
   script: scripts/deploy.sh
   on:
     tags: true
-    condition: "$TRAVIS_PHP_VERSION = 8.2"
+    condition: "$TRAVIS_PHP_VERSION = 7.1"
 
 script:
   - composer test
