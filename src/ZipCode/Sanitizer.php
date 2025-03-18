@@ -32,7 +32,7 @@ class Sanitizer
         elseif ($countryCode === 'GB') {
             $splitPos = min(max(strlen($newCode) - 3, 2), 4);
         }
-        elseif (in_array($countryCode, ['CZ', 'MT', 'SE', 'SK'])) {
+        elseif (in_array($countryCode, ['CZ', 'IE', 'MT', 'SE', 'SK'])) {
             $splitPos = 3;
         }
 
