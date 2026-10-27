@@ -15,7 +15,8 @@ class EoriValidatorTest extends TestCase
 
         if (is_callable($returnOrCallable)) {
             $mock->method('__soapCall')->willReturnCallback($returnOrCallable);
-        } else {
+        }
+        else {
             $mock->method('__soapCall')->willReturn($returnOrCallable);
         }
 

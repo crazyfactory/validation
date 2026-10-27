@@ -29,7 +29,10 @@ class Validator
         'GR' => ['11111'],
         'HR' => ['11111'],
         'HU' => ['1111'],
-        'IE' => ['A11 A111','A11 AA11', 'A11 AAA1','A11 AAAA','A11 A11A','A11 A1A1','D6W A111','D6W AA11','D6W AAA1','D6W AAAA','D6W A11A','D6W A1A1'],
+        'IE' => [
+            'A11 A111','A11 AA11','A11 AAA1','A11 AAAA','A11 A11A','A11 A1A1',
+            'D6W A111','D6W AA11','D6W AAA1','D6W AAAA','D6W A11A','D6W A1A1',
+        ],
         'IT' => ['11111'],
         'LT' => ['11111'],
         'LU' => ['1111'],

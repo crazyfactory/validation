@@ -35,6 +35,7 @@
     ],
     "scripts": {
         "test": "phpunit",
-        "lint": "phpcbf --standard=phpcs.xml"
+        "lint": "phpcs --standard=phpcs.xml",
+        "lint:fix": "phpcbf --standard=phpcs.xml"
     }
 }
