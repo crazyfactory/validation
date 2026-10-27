@@ -15,7 +15,7 @@
     "repositories": [
         {
             "type": "composer",
-            "url": "https://php.fury.io/q_omCXxCokXrnmmFhsod/crazyfactory/"
+            "url": "https://php.fury.io/crazyfactory/"
         }
     ],
     "require": {
