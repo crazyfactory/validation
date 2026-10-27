@@ -12,14 +12,21 @@
             "CrazyFactory\\Validation\\Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://php.fury.io/crazyfactory/"
+        }
+    ],
     "require": {
-        "php": "^7.1",
+        "php": ">=7.1",
         "ext-soap": "*"
     },
     "require-dev": {
-        "codeception/codeception": "^2.4",
+        "codeception/codeception": "^4.0",
+        "codeception/module-asserts": "^2.0",
         "crazyfactory/sniffs": "^1.3",
-        "phpunit/phpunit": "7.0"
+        "phpunit/phpunit": "^9.6"
     },
     "license": "GPL",
     "authors": [
