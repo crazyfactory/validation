@@ -12,6 +12,12 @@
             "CrazyFactory\\Validation\\Tests\\": "tests/"
         }
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://php.fury.io/q_omCXxCokXrnmmFhsod/crazyfactory/"
+        }
+    ],
     "require": {
         "php": ">=7.1",
         "ext-soap": "*"
