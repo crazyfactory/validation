@@ -49,9 +49,8 @@ jobs:
           fetch-depth: 0
 
       - name: Push to Fury
+        env:
+          GEMFURY_USER: ${{ secrets.GEMFURY_USER }}
+          GEMFURY_TOKEN: ${{ secrets.GEMFURY_TOKEN }}
         run: |
-          git config credential.helper store
-          echo "https://${{ secrets.GEMFURY_USER }}:${{ secrets.GEMFURY_PASSWORD }}@git.fury.io" \
-            >> ~/.git-credentials
-          git remote add fury "https://git.fury.io/${{ github.repository }}.git"
-          git push fury HEAD:master --tags
+          git push --force "https://${GEMFURY_USER}:${GEMFURY_TOKEN}@git.fury.io/${GITHUB_REPOSITORY}.git" HEAD:master --tags
