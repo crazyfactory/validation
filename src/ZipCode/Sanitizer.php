@@ -15,7 +15,7 @@ class Sanitizer
      *
      * @return string
      */
-    public function format(string $zipCode, string $countryCode, bool &$sanitized = null): string
+    public function format(string $zipCode, string $countryCode, ?bool &$sanitized = null): string
     {
         $newCode = strtoupper($zipCode);
 
@@ -59,7 +59,7 @@ class Sanitizer
      *
      * @return string
      */
-    public static function sanitize(string $zipCode, string $countryCode, bool &$sanitized = null): string
+    public static function sanitize(string $zipCode, string $countryCode, ?bool &$sanitized = null): string
     {
         static $instance;
 
