@@ -5,7 +5,7 @@ namespace CrazyFactory\Validation\Tests;
 use CrazyFactory\Validation\ZipCode\Sanitizer;
 use CrazyFactory\Validation\ZipCode\Validator;
 
-class ZipCodeTest extends \Codeception\Test\Unit
+class ZipCodeTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsValid()
     {

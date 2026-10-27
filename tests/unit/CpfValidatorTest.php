@@ -4,7 +4,7 @@ namespace CrazyFactory\Validation\Tests;
 
 use CrazyFactory\Validation\Cpf\CpfValidator;
 
-class CpfValidatorTest extends \Codeception\Test\Unit
+class CpfValidatorTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsValid()
     {

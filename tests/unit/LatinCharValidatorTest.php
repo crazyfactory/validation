@@ -4,7 +4,7 @@ namespace CrazyFactory\Validation\Tests\unit;
 
 use CrazyFactory\Validation\LatinCharValidator;
 
-class LatinCharValidatorTest extends \Codeception\Test\Unit
+class LatinCharValidatorTest extends \PHPUnit\Framework\TestCase
 {
     public function testIsValid()
     {

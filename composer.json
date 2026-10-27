@@ -23,8 +23,6 @@
         "ext-soap": "*"
     },
     "require-dev": {
-        "codeception/codeception": "^4.0",
-        "codeception/module-asserts": "^2.0",
         "crazyfactory/sniffs": "^1.3",
         "phpunit/phpunit": "^9.6"
     },
@@ -36,9 +34,7 @@
         }
     ],
     "scripts": {
-        "test": "codecept run",
-        "test:coverage": "codecept run unit --coverage --coverage-xml --coverage-html",
-        "lint": "phpcbf --standard=phpcs.xml",
-        "lint:fix": "phpcbf --standard=phpcs.xml"
+        "test": "phpunit",
+        "lint": "phpcbf --standard=phpcs.xml"
     }
 }
