@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+    tags: ['*']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.2', '7.4']
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP ${{ matrix.php }}
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: soap
+          coverage: none
+
+      - name: Configure Fury auth
+        run: |
+          echo '{"http-basic":{"php.fury.io":{"username":"${{ secrets.GEMFURY_TOKEN }}","password":""}}}' \
+            > ~/.composer/auth.json
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-interaction
+
+      - name: Test
+        run: composer test
+
+      - name: Lint
+        run: composer lint
+
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Push to Fury
+        run: |
+          git config credential.helper store
+          echo "https://${{ secrets.GEMFURY_USER }}:${{ secrets.GEMFURY_PASSWORD }}@git.fury.io" \
+            >> ~/.git-credentials
+          git remote add fury "https://git.fury.io/${{ github.repository }}.git"
+          git push fury HEAD:master --tags
