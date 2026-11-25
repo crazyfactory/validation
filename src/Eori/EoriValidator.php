@@ -17,7 +17,7 @@ class EoriValidator
      */
     private $ignoreFaultCodes = [];
 
-    public function __construct(SoapClient $client = null)
+    public function __construct(?SoapClient $client = null)
     {
         $this->soapClient = $client;
         $this->ignoreFaultCodes = ['WSDL'];
